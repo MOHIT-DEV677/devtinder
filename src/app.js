@@ -5,6 +5,22 @@ const userSchema=require("./models/user");
 const app = express();
 // const {userAuth}=require('./Auth.js');
 app.use(express.json());
+app.patch("/user",async (req,res)=>{
+    const userid=req.body.userid;
+    console.log(userid);
+    try{
+    const users= await userSchema.findOneAndUpdate({_id:userid},req.body,{runValidators:true});
+    
+    if(!users){
+        res.status(401).send("user is not found");
+    }
+    else{
+        res.send("user updated successfully");
+    }
+    }catch(err){
+        res.send("something went wrong"+ err.message);
+    }
+})
 app.get("/user",async (req,res)=>{
     const emailid=req.body.email;
     console.log(emailid);
