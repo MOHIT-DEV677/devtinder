@@ -5,10 +5,16 @@ const userSchema=require("./models/user");
 const app = express();
 // const {userAuth}=require('./Auth.js');
 app.use(express.json());
-app.patch("/user",async (req,res)=>{
-    const userid=req.body.userid;
+app.patch("/user/:userid",async (req,res)=>{
+    const userid=req.params?.userid;
+    const data=req.body;
     console.log(userid);
     try{
+      const ALLOWED_UPDATES=["userid","profileurl","skills","lastName","gender"];
+      const isallowed=Object.keys(data).every((k)=>ALLOWED_UPDATES.includes(k));
+      if(!isallowed){
+        throw new Error("updates is not allowed");
+      }
     const users= await userSchema.findOneAndUpdate({_id:userid},req.body,{runValidators:true});
     
     if(!users){

@@ -12,6 +12,10 @@ const userSchema=new mongoose.Schema({
     required:true,
     unique:true,
    },
+   profileurl:{
+        type:String,
+        default:"https://as2.ftcdn.net/jpg/05/89/93/27/1000_F_589932782_vQAEAZhHnq1QCGu5ikwrYaQD0Mmurm0N.jpg"
+   },
    password:{
     type:String,
     requried:true,
