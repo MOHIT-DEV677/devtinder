@@ -3,7 +3,7 @@ const userSchema=mongoose.Schema({
     firstName:{
         type:String,
     },
-   secondName:{
+   lastName:{
     type:String,
    },
    email:{

@@ -1,16 +1,29 @@
 const express = require("express");
 const connectDB = require("./config/Database");
 const userSchema=require("./models/user");
+// const user = require("./models/user");
 const app = express();
 // const {userAuth}=require('./Auth.js');
-app.post("/signup",async (req,res)=>{
-    const userObj={
-        firstName:"mikasa",
-        lastName:"ackerman",
-        email:"mikasa@gmail.com",
-        password:"mikasa@123",
+app.use(express.json());
+app.get("/user",async (req,res)=>{
+    const emailid=req.body.email;
+    console.log(emailid);
+    try{
+        const users=await userSchema.findOne();
+        if(!users){
+            res.status(401).send("user is not found");
+        }
+        else{
+        res.send(users);
+        }
+    }catch(err){
+        res.status(400).send("something is went wrong");
     }
-    const user=new userSchema(userObj);
+    
+})
+app.post("/signup",async (req,res)=>{
+    console.log(req.body);
+    const user=new userSchema(req.body);
     try{
     await user.save();
     res.send("data is added successfully");
