@@ -1,13 +1,22 @@
-const userAuth=(req,res,next)=>{
-    const token="xyzas";
-    const isAuthorized=token==="xyz";
-    if(isAuthorized){
-        // console.log("user is authorized");
-        next();
+const jwt=require("jsonwebtoken");
+const userSchema=require("./models/user");
+const userAuth=async (req,res,next)=>{
+    try{
+    const {token}=req.cookies;
+    if(!token){
+        throw new Error("token is not valid");
     }
-    else{
-        res.status(401).send("user is not authorized");
+    const decoded=jwt.verify(token,"DEV@TINDER79");
+    const {_id}=decoded;
+    const user=await userSchema.findOne({_id});
+    if(!user){
+        throw new Error("user is not valid");
     }
+    req.user=user;
+    next();
+}catch(err){
+    res.status(400).send("ERROR : "+err.message);
+}
 }
 module.exports={
     userAuth,
