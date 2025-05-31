@@ -6,7 +6,7 @@ const userAuth=async (req,res,next)=>{
     if(!token){
         throw new Error("token is not valid");
     }
-    const decoded=jwt.verify(token,"DEV@TINDER79");
+    const decoded= jwt.verify(token,"DEV@TINDER79");
     const {_id}=decoded;
     const user=await userSchema.findOne({_id});
     if(!user){

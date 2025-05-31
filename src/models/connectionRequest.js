@@ -23,7 +23,7 @@ connectionReqMod.pre('save',function(){
     if(user.fromUserid.equals(user.toUserid)){
         throw new Error("cannot send the request to same username");
     }
-    next();
+    // next();
 });
 const conReq=mongoose.model('connectionRequest',connectionReqMod);
 module.exports={

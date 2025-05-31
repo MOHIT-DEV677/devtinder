@@ -25,7 +25,8 @@ authRouter.post("/login",async (req,res)=>{
     }
 });
 authRouter.post("/logout",async (req,res)=>{
-    res.cookie('token',{expires:new Date(Date.now())});
+    res.cookie('token',"",{expires:new Date(Date.now())});
+    res.send("logout successfully");
 });
 authRouter.post("/signup",userAuth,async (req,res)=>{
     try{

@@ -39,5 +39,31 @@ requestRouter.post("/request/send/:status/:toUserid",userAuth,async (req,res)=>{
     res.status(400).send("ERROR : "+err.message);
 }
 });
+requestRouter.post("/request/review/:status/:requestId",userAuth,async (req,res)=>{
+    try{
+    const {status,requestId}=req.params;
+    const loggedInuser=req.user;
+    const ALLOWED_STATUS=["accepted","rejected"];
+    if(!ALLOWED_STATUS.includes(status)){
+        throw new Error("status is not allowed");
+    }
+    const connectionreq=await conReq.findOne({
+        _id:requestId,
+        toUserid:loggedInuser._id,
+        status:"interested"
+    });
+    if(!connectionreq){
+        throw new Error("request is invalid");
+    }
+    connectionreq.status=status;
+    const data=await connectionreq.save();
+    res.json({
+        message:"connection request is"+status,
+        data
+    })
 
+}catch(err){
+    res.status(400).send("ERROR : "+err.message);
+}
+});
 module.exports=requestRouter;
