@@ -2,9 +2,11 @@ const mongoose=require("mongoose");
 const connectionReqMod=new mongoose.Schema({
     toUserid:{
         type:mongoose.Schema.ObjectId,
+        ref:"user",
         required:true
     },
     fromUserid:{
+        ref:"user",
         type:mongoose.Schema.ObjectId,
         required:true
     },

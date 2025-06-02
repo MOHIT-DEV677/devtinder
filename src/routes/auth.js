@@ -33,7 +33,6 @@ authRouter.post("/signup",userAuth,async (req,res)=>{
     validsignup(req);
     const {firstName,lastName,email,password}=req.body;
     const passwordhash=await bcrypt.hash(password,10);
-    console.log(req.body);
     const user=new userSchema({
         firstName,lastName,password:passwordhash,email,
     });
