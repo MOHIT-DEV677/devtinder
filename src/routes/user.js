@@ -3,7 +3,7 @@ const { userAuth } = require("../Auth");
 const userRouter=express.Router();
 const {conReq}=require("../models/connectionRequest");
 const user=require("../models/user");
-const USER_SAFE_DATA=["firstName","lastName","profileurl","about"];
+const USER_SAFE_DATA=["firstName","lastName","profileurl","skills"];
 userRouter.get("/user/request/received",userAuth,async (req,res)=>{
     try{
     const loggedInuser=req.user;

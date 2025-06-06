@@ -9,13 +9,13 @@ authRouter.post("/login",async (req,res)=>{
         const {email,password}=req.body;
         const user=await userSchema.findOne({email:email});
         if(!user){
-            throw new Error("invalid credentials");
+            throw new Error("invalid credentials")
         }
         const ispasswordvalid=await user.validation(password);
         if(ispasswordvalid){
             const token=await user.getJWT();
             res.cookie("token",token,{expires: new Date(Date.now() + 8 * 3600000)});
-            res.send("login successfully");
+            res.send(user);
         }else{
             throw new Error("invalid credentials");
         }
